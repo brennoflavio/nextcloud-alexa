@@ -41,7 +41,7 @@
                         }
                     ],
                     "samples": [
-                        "criar evento {event_query}" 
+                        "criar evento {event_query}"
                     ]
                 },
                 {
@@ -49,7 +49,7 @@
                     "slots": [],
                     "samples": [
                         "listar tarefas",
-                        "listar minhas tarefas" 
+                        "listar minhas tarefas"
                     ]
                 },
                 {
@@ -81,6 +81,41 @@
                         "criar tarefa {task_name}",
                         "criar a tarefa {task_name}",
                         "criar a tarefa de {task_name}"
+                    ]
+                },
+                {
+                    "name": "ListNotesIntent",
+                    "slots": [],
+                    "samples": [
+                        "listar notas",
+                        "listar minhas notas"
+                    ]
+                },
+                {
+                    "name": "CreateNoteIntent",
+                    "slots": [
+                        {
+                            "name": "note_content",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "criar nota {note_content}",
+                        "criar a nota {note_content}",
+                        "criar a nota de {note_content}",
+                        "anotar {note_content}"
+                    ]
+                },
+                {
+                    "name": "ReadNoteIntent",
+                    "slots": [
+                        {
+                            "name": "note_name",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "ler nota {note_name}"
                     ]
                 },
                 {
