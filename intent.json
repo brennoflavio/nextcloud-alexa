@@ -88,7 +88,9 @@
                     "slots": [],
                     "samples": [
                         "listar notas",
-                        "listar minhas notas"
+                        "listar minhas notas",
+                        "ler notas",
+                        "ler minhas notas"
                     ]
                 },
                 {
