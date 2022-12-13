@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 from utils.nextcloud_calendar import list_events
 from dateutil.parser import parse
-from utils.nextcloud_notes import get_notes_summary
+from utils.nextcloud_notes import get_notes_summary, get_single_note
 
 app = Flask(__name__)
 ask = Ask(app, "/")
@@ -89,10 +89,18 @@ def create_calendar_intent(task_name):
     return statement(speech_text).simple_card("CreateTaskIntent", speech_text)
 
 
+# Done
 @ask.intent("ListNotesIntent")
 def list_tasks_intent():
-    speech_text = f"Suas primeiras 5 notas são: {get_notes_summary()}."
-    return statement(speech_text).simple_card("ListTasksIntent", speech_text)
+    speech_text = f"Suas primeiras 5 notas são: {get_notes_summary()}. Peça para ler uma nota para detalhes."
+    return statement(speech_text).simple_card("Lista de notas", speech_text)
+
+
+# Done
+@ask.intent("ReadNoteIntent", default={"note_name": ""})
+def read_note_intent(note_name):
+    speech_text = get_single_note(note_name)
+    return statement(speech_text).simple_card("Nota", speech_text)
 
 
 @ask.intent("CreateNoteIntent", default={"note_content": "Sem descrição"})

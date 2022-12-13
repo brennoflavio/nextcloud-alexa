@@ -115,7 +115,8 @@
                         }
                     ],
                     "samples": [
-                        "ler nota {note_name}"
+                        "ler nota {note_name}",
+                        "ler a nota {note_name}"
                     ]
                 },
                 {

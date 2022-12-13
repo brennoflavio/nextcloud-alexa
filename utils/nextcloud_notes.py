@@ -2,6 +2,17 @@ import requests
 import os
 import urllib.parse
 import json
+from fuzzywuzzy import process
+import re
+
+
+def strip_links(s: str) -> str:
+    return re.sub(
+        r"http\S+",
+        "link",
+        s,
+        flags=re.MULTILINE,
+    )
 
 
 def get_notes() -> dict:
@@ -27,9 +38,35 @@ def get_notes_summary() -> str:
     if len(notes) >= 5:
         notes = notes[:5]
 
-    notes_text = ", ".join([x.get("title", "") for x in notes])
+    notes_text = ", ".join([strip_links(x.get("title", "")) for x in notes])
 
     return notes_text
+
+
+def get_single_note(name: str) -> str:
+    notes = get_notes()
+
+    choices = [x.get("title", "") for x in notes]
+    extract = process.extractOne(name, choices)
+
+    if extract:
+        title = extract[0]
+        note = [x for x in notes if x.get("title", "") == title]
+
+        if note:
+            text_note = "".join(
+                [
+                    x
+                    for x in strip_links(note[0].get("content")).replace("\n", " ")
+                    if x.isalnum() or x == " "
+                ]
+            )
+            if len(text_note) >= 6000:
+                text_note = text_note[:6000]
+
+            return text_note
+
+    return "Nota não encontrada"
 
 
 if __name__ == "__main__":
@@ -37,4 +74,5 @@ if __name__ == "__main__":
 
     load_dotenv()
 
-    get_notes()
+    # print(get_notes_summary())
+    # print(get_single_note("nas"))
