@@ -57,12 +57,15 @@ def get_single_note(name: str) -> str:
             text_note = "".join(
                 [
                     x
-                    for x in strip_links(note[0].get("content")).replace("\n", " ")
-                    if (x.isalnum() or x == " ") and x != "x"
+                    for x in strip_links(note[0].get("content")).replace("\n", ". ")
+                    if (x.isalnum() or x == " " or x in "!(),.:;?") and x != "x"
                 ]
             ).strip()
             if len(text_note) >= 6000:
                 text_note = text_note[:6000]
+
+            while ". ." in text_note:
+                text_note = text_note.replace(". .", " ")
 
             while "  " in text_note:
                 text_note = text_note.replace("  ", " ")
