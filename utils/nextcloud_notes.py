@@ -75,10 +75,33 @@ def get_single_note(name: str) -> str:
     return "Nota não encontrada"
 
 
+def create_note(content: str):
+    url = urllib.parse.urljoin(
+        os.getenv("NEXTCLOUD_URL"), "index.php/apps/notes/api/v1/notes"
+    )
+
+    if len(content) >= 30:
+        title = content[:30]
+    else:
+        title = content
+
+    response = requests.post(
+        url,
+        auth=(os.getenv("NEXTCLOUD_USERNAME"), os.getenv("NEXTCLOUD_PASSWORD")),
+        json={
+            "title": title,
+            "content": content,
+        },
+    )
+
+    response.raise_for_status()
+
+
 if __name__ == "__main__":
     from dotenv import load_dotenv
 
     load_dotenv()
 
     # print(get_notes_summary())
-    print(get_single_note("nas"))
+    # print(get_single_note("nas"))
+    create_note("argentina ganhou do marrocos")
