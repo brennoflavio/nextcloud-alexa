@@ -58,11 +58,14 @@ def get_single_note(name: str) -> str:
                 [
                     x
                     for x in strip_links(note[0].get("content")).replace("\n", " ")
-                    if x.isalnum() or x == " "
+                    if (x.isalnum() or x == " ") and x != "x"
                 ]
-            )
+            ).strip()
             if len(text_note) >= 6000:
                 text_note = text_note[:6000]
+
+            while "  " in text_note:
+                text_note = text_note.replace("  ", " ")
 
             return text_note
 
@@ -75,4 +78,4 @@ if __name__ == "__main__":
     load_dotenv()
 
     # print(get_notes_summary())
-    # print(get_single_note("nas"))
+    print(get_single_note("nas"))
