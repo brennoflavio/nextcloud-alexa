@@ -105,7 +105,7 @@ def read_note_intent(note_name):
 
 # Done
 @ask.intent("CreateNoteIntent", default={"note_content": "Sem descrição"})
-def create_calendar_intent(note_content):
+def create_note_intent(note_content):
     create_note(note_content)
     speech_text = "Nota criada!"
     return statement(speech_text).simple_card("Criar Nota", speech_text)
