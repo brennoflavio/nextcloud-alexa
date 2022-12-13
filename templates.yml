@@ -1,0 +1,4 @@
+welcome: Bem vindo ao jogo da memória. Eu vou dizer três número para você repetir de trás para frente. Pronto?
+round: Você pode repetir os números {{ numbers|join(", ") }} de trás para frente?
+win: Bom trabalho!
+lose: Desculpe, essa resposta está errada.

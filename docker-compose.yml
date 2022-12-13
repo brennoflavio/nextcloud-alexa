@@ -1,0 +1,8 @@
+services:
+  nextcloud-alexa:
+    container_name: nextcloud-alexa
+    build: .
+    restart: always
+    ports:
+      - "8092:5000"
+

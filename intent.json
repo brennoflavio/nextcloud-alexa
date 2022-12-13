@@ -1,0 +1,105 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "meus dados",
+            "intents": [
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ListCalendarIntent",
+                    "slots": [
+                        {
+                            "name": "event_date",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "eventos de {event_date}",
+                        "eventos {event_date}",
+                        "listar os eventos de {event_date}",
+                        "listar eventos {event_date}",
+                        "eventos do dia {event_date}",
+                        "listar os eventos do dia {event_date}"
+                    ]
+                },
+                {
+                    "name": "CreateCalendarIntent",
+                    "slots": [
+                        {
+                            "name": "event_query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "criar evento {event_query}" 
+                    ]
+                },
+                {
+                    "name": "ListTasksIntent",
+                    "slots": [],
+                    "samples": [
+                        "listar tarefas",
+                        "listar minhas tarefas" 
+                    ]
+                },
+                {
+                    "name": "FinishTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task_name",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "concluir tarefa {task_name}",
+                        "finalizar tarefa {task_name}",
+                        "finalizar a tarefa {task_name}",
+                        "finalizar a tarefa de {task_name}",
+                        "concluir a tarefa {task_name}",
+                        "concluir a tarefa de {task_name}"
+                    ]
+                },
+                {
+                    "name": "CreateTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task_name",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "criar tarefa {task_name}",
+                        "criar a tarefa {task_name}",
+                        "criar a tarefa de {task_name}"
+                    ]
+                },
+                {
+                    "name": "HelloWorldIntent",
+                    "slots": [],
+                    "samples": [
+                        "diga olá",
+                        "diga olá mundo",
+                        "olá",
+                        "diga oi",
+                        "oi"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+}

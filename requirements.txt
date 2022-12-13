@@ -1,0 +1,8 @@
+https://github.com/johnwheeler/flask-ask/archive/master.zip
+jinja2<3.1.0
+itsdangerous==2.0.1
+caldav==0.11.0
+python-dotenv==0.21.0
+python-dateutil==2.8.2
+vobject==0.9.6.1
+requests
