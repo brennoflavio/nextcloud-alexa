@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from utils.nextcloud_calendar import list_events
 from dateutil.parser import parse
 from utils.nextcloud_notes import get_notes_summary, get_single_note, create_note
-from utils.nextcloud_tasks import get_task_summary
+from utils.nextcloud_tasks import get_task_summary, create_task
 
 app = Flask(__name__)
 ask = Ask(app, "/")
@@ -83,10 +83,12 @@ def finish_task_intent(task_name):
     return statement(speech_text).simple_card("FinishTaskIntent", speech_text)
 
 
+# Done
 @ask.intent("CreateTaskIntent", default={"task_name": "Sem descrição"})
 def create_calendar_intent(task_name):
+    create_task(task_name)
     speech_text = f"Criado tarefa {task_name}"
-    return statement(speech_text).simple_card("CreateTaskIntent", speech_text)
+    return statement(speech_text).simple_card("Criar Tarefa", speech_text)
 
 
 # Done

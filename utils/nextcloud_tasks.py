@@ -1,8 +1,27 @@
 import os
 import caldav
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from dateutil.parser import parse
 from typing import Tuple
+from uuid import uuid4
+
+
+def create_ical_card(summary) -> str:
+    dt = datetime.now(tz=timezone(timedelta(hours=-3))).strftime("%Y%m%dT%H%M%S")
+    ical_base = f"""
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Nextcloud Alexa
+BEGIN:VTODO
+UID:{str(uuid4())}
+CREATED:{dt}
+LAST-MODIFIED:{dt}
+DTSTAMP:{dt}
+SUMMARY:{summary}
+END:VTODO
+END:VCALENDAR
+    """
+    return ical_base.strip()
 
 
 def parse_task_card(task_card: str) -> Tuple[str, str]:
@@ -64,9 +83,24 @@ def get_task_summary() -> str:
     return tasks_text
 
 
+def create_task(summary: str):
+    client = caldav.DAVClient(
+        url=os.getenv("TASK_URL"),
+        username=os.getenv("NEXTCLOUD_USERNAME"),
+        password=os.getenv("NEXTCLOUD_PASSWORD"),
+    )
+
+    principal = client.principal()
+    calendar = principal.calendar(name=os.getenv("TASK_LIST_NAME"))
+
+    ical = create_ical_card(summary)
+    calendar.add_event(ical)
+
+
 if __name__ == "__main__":
     from dotenv import load_dotenv
     from datetime import datetime, timedelta, timezone
 
     load_dotenv()
-    print(get_task_summary())
+    # print(get_task_summary())
+    create_task()
