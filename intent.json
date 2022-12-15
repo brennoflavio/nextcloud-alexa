@@ -4,6 +4,10 @@
             "invocationName": "pardal",
             "intents": [
                 {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
                     "name": "AMAZON.StopIntent",
                     "samples": []
                 },
@@ -123,8 +127,27 @@
                     ]
                 },
                 {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
+                    "name": "ListEmailsIntent",
+                    "slots": [],
+                    "samples": [
+                        "listar emails",
+                        "listar meus emails",
+                        "ler emails",
+                        "ler meus emails"
+                    ]
+                },
+                {
+                    "name": "ReadEmailIntent",
+                    "slots": [
+                        {
+                            "name": "email_subject",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "ler email {email_subject}",
+                        "ler o email {email_subject}"
+                    ]
                 }
             ],
             "types": []

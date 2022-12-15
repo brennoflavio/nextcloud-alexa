@@ -8,6 +8,7 @@ from utils.nextcloud_calendar import list_events, create_event
 from dateutil.parser import parse
 from utils.nextcloud_notes import get_notes_summary, get_single_note, create_note
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
+from utils.imap_email import get_emails_summary, get_single_email
 
 app = Flask(__name__)
 ask = Ask(app, "/")
@@ -85,7 +86,7 @@ def create_calendar_intent(task_name):
 
 
 @ask.intent("ListNotesIntent")
-def list_tasks_intent():
+def list_notes_intent():
     speech_text = f"Suas primeiras 5 notas são: {get_notes_summary()}. Peça para ler uma nota para detalhes."
     return statement(speech_text).simple_card("Lista de notas", speech_text)
 
@@ -101,6 +102,18 @@ def create_note_intent(note_content):
     create_note(note_content)
     speech_text = "Nota criada!"
     return statement(speech_text).simple_card("Criar Nota", speech_text)
+
+
+@ask.intent("ListEmailsIntent")
+def list_emails_intent():
+    speech_text = f"Seus primeiras 5 emails são: {get_emails_summary()}. Peça para ler um email para detalhes."
+    return statement(speech_text).simple_card("Lista de emails", speech_text)
+
+
+@ask.intent("ReadEmailIntent", default={"email_subject": ""})
+def read_note_intent(email_subject):
+    speech_text = get_single_email(email_subject)
+    return statement(speech_text).simple_card("Email", speech_text)
 
 
 # if __name__ == '__main__':

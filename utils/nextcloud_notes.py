@@ -4,15 +4,7 @@ import urllib.parse
 import json
 from fuzzywuzzy import process
 import re
-
-
-def strip_links(s: str) -> str:
-    return re.sub(
-        r"http\S+",
-        "link",
-        s,
-        flags=re.MULTILINE,
-    )
+from utils.text_utils import strip_links
 
 
 def get_notes() -> dict:
