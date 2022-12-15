@@ -106,7 +106,7 @@ def create_note_intent(note_content):
 
 @ask.intent("ListEmailsIntent")
 def list_emails_intent():
-    speech_text = f"Seus primeiras 5 emails são: {get_emails_summary()}. Peça para ler um email para detalhes."
+    speech_text = f"Seus primeiros 5 emails são: {get_emails_summary()}. Peça para ler um email para detalhes."
     return statement(speech_text).simple_card("Lista de emails", speech_text)
 
 
