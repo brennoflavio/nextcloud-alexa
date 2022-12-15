@@ -48,7 +48,7 @@ def session_ended():
 
 # Implementations
 @ask.intent("ListCalendarIntent", default={"event_date": ""})
-def list_calendar_intent(event_date):
+def list_calendar_intent(event_date=""):
     if not event_date:
         event_date = datetime.now(tzinfo=timezone(timedelta(hours=-3))).replace(
             hour=0, minute=0, second=0, microsecond=0

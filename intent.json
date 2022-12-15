@@ -29,7 +29,8 @@
                         "listar os eventos de {event_date}",
                         "listar eventos {event_date}",
                         "eventos do dia {event_date}",
-                        "listar os eventos do dia {event_date}"
+                        "listar os eventos do dia {event_date}",
+                        "listar eventos"
                     ]
                 },
                 {
