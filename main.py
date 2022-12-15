@@ -139,7 +139,7 @@ def music_folder(name):
 @app.route("/test")
 def test_music():
     musics = get_random_playlist()
-    return json.dumps(musics)
+    return musics
 
 
 # if __name__ == '__main__':
