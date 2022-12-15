@@ -25,12 +25,6 @@ def launch():
     )
 
 
-@ask.intent("HelloWorldIntent")
-def hello_world():
-    speech_text = "Hello world"
-    return statement(speech_text).simple_card("HelloWorld", speech_text)
-
-
 @ask.intent("AMAZON.HelpIntent")
 def help():
     speech_text = "You can say hello to me!"
@@ -46,7 +40,6 @@ def session_ended():
     return "{}", 200
 
 
-# Implementations
 @ask.intent("ListCalendarIntent", default={"event_date": ""})
 def list_calendar_intent(event_date=""):
     if not event_date:
@@ -64,7 +57,6 @@ def list_calendar_intent(event_date=""):
     return statement(speech_text).simple_card("Eventos Calendário", speech_text)
 
 
-# Done
 @ask.intent("CreateCalendarIntent", default={"event_query": "Sem descrição"})
 def create_calendar_intent(event_query):
     create_event(event_query)
@@ -72,14 +64,12 @@ def create_calendar_intent(event_query):
     return statement(speech_text).simple_card("Criar Evento", speech_text)
 
 
-# Done
 @ask.intent("ListTasksIntent")
 def list_tasks_intent():
     speech_text = f"Suas próximas 5 tarefas são: {get_task_summary()}."
     return statement(speech_text).simple_card("Lista de tarefas", speech_text)
 
 
-# Done
 @ask.intent("FinishTaskIntent", default={"task_name": "Sem descrição"})
 def finish_task_intent(task_name):
     finish_task(task_name)
@@ -87,7 +77,6 @@ def finish_task_intent(task_name):
     return statement(speech_text).simple_card("Finalizar tarefa", speech_text)
 
 
-# Done
 @ask.intent("CreateTaskIntent", default={"task_name": "Sem descrição"})
 def create_calendar_intent(task_name):
     create_task(task_name)
@@ -95,21 +84,18 @@ def create_calendar_intent(task_name):
     return statement(speech_text).simple_card("Criar Tarefa", speech_text)
 
 
-# Done
 @ask.intent("ListNotesIntent")
 def list_tasks_intent():
     speech_text = f"Suas primeiras 5 notas são: {get_notes_summary()}. Peça para ler uma nota para detalhes."
     return statement(speech_text).simple_card("Lista de notas", speech_text)
 
 
-# Done
 @ask.intent("ReadNoteIntent", default={"note_name": ""})
 def read_note_intent(note_name):
     speech_text = get_single_note(note_name)
     return statement(speech_text).simple_card("Nota", speech_text)
 
 
-# Done
 @ask.intent("CreateNoteIntent", default={"note_content": "Sem descrição"})
 def create_note_intent(note_content):
     create_note(note_content)

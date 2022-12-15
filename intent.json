@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "meus dados",
+            "invocationName": "pardal",
             "intents": [
                 {
                     "name": "AMAZON.StopIntent",
@@ -120,17 +120,6 @@
                     "samples": [
                         "ler nota {note_name}",
                         "ler a nota {note_name}"
-                    ]
-                },
-                {
-                    "name": "HelloWorldIntent",
-                    "slots": [],
-                    "samples": [
-                        "diga olá",
-                        "diga olá mundo",
-                        "olá",
-                        "diga oi",
-                        "oi"
                     ]
                 },
                 {
