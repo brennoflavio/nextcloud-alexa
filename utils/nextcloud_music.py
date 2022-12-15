@@ -61,7 +61,7 @@ def download_song(song_id: str) -> str:
 
 
 def get_random_playlist() -> str:
-    song_ids = get_random_songs(5)
+    song_ids = get_random_songs(1)
 
     results = []
     with ThreadPoolExecutor(8) as pool:
