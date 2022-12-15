@@ -97,7 +97,11 @@ def list_tasks() -> str:
         if hour:
             event_list.append((summary, hour, event.data, event))
 
-    return sorted(event_list, key=lambda x: x[1].replace(tzinfo=None), reverse=True)
+    return sorted(
+        event_list,
+        key=lambda x: x[1].replace(tzinfo=x[1].tzinfo if x[1].tzinfo else timezone.utc),
+        reverse=True,
+    )
 
 
 def get_task_summary() -> str:
@@ -155,5 +159,5 @@ if __name__ == "__main__":
     from datetime import datetime, timedelta, timezone
 
     load_dotenv()
-    # print(get_task_summary())
+    print(get_task_summary())
     # finish_task("arrumar fechadura")

@@ -7,47 +7,50 @@ import vobject
 import vobject
 import csv
 import requests
+import icalendar
+import recurring_ical_events
+import urllib.request
+from typing import Tuple, List
 
 
-def list_ics_events(ics_url: str, start_date: datetime, end_date: datetime) -> str:
+def list_ics_events(
+    ics_url: str, start_date: datetime, end_date: datetime
+) -> List[Tuple[str, datetime]]:
     events_text = ""
 
-    content = requests.get(ics_url).text
-    for cal in vobject.readComponents(content):
-        for component in cal.components():
-            if component.name == "VEVENT" and component.dtstamp.valueRepr():
-                dtstamp = component.dtstamp.valueRepr()
+    ical_string = requests.get(ics_url).text
+    calendar = icalendar.Calendar.from_ical(ical_string)
+    events = recurring_ical_events.of(calendar).between(start_date, end_date)
 
-                if dtstamp >= start_date and dtstamp < end_date:
-                    text_time = str(dtstamp.hour)
+    final_events = []
+    for event in events:
+        start = event["DTSTART"].dt
+        summary = event["SUMMARY"]
 
-                    summary = component.summary.valueRepr()
-                    if not summary:
-                        summary = "Sem Descrição"
+        final_events.append((str(summary), start))
 
-                    events_text = events_text + f" {summary} às {text_time} horas,"
-
-    return events_text
+    return final_events
 
 
 def parse_extra_calendars(start_date: datetime, end_date: datetime):
     calendars = os.getenv("EXTRA_CALENDARS").split(",")
 
-    event_text = ""
+    final = []
     for calendar in calendars:
-        event_text = event_text + list_ics_events(calendar, start_date, end_date)
+        final.extend(list_ics_events(calendar, start_date, end_date))
 
-    return event_text
+    return final
 
 
 if __name__ == "__main__":
-    url = ""
+    from dotenv import load_dotenv
+
+    load_dotenv()
 
     print(
-        list_ics_events(
-            url,
-            datetime(2022, 12, 1, tzinfo=timezone(timedelta(hours=-3))),
-            datetime(2022, 12, 14, tzinfo=timezone(timedelta(hours=-3))),
+        parse_extra_calendars(
+            datetime(2022, 12, 15, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2022, 12, 16, tzinfo=timezone(timedelta(hours=-3))),
         )
     )
 
