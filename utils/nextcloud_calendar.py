@@ -4,6 +4,8 @@ from datetime import datetime, timezone, timedelta
 from dateutil.parser import parse
 from typing import Tuple
 from utils.ics_calendar import parse_extra_calendars
+from unidecode import unidecode
+from uuid import uuid4
 
 
 def parse_event_card(event_card: str) -> Tuple[str, str]:
@@ -71,14 +73,67 @@ def list_events(start_date: datetime, end_date: datetime) -> str:
     return events_text
 
 
+def create_event(event_query: str) -> None:
+    # <descrição do evento> no dia <número> as <numero> horas
+    event_query = unidecode(event_query).lower()
+    day_connector = "no dia"
+    hour_connector = "as"
+
+    first_split = event_query.split(day_connector)
+    second_split = " ".join(first_split[1].split(hour_connector))
+
+    event_summary = first_split[0].strip()
+
+    day = None
+    hour = None
+    for n in second_split.split(" "):
+        try:
+            int_n = int(n.strip())
+            if not day:
+                day = int_n
+            else:
+                hour = int_n
+        except Exception:
+            continue
+
+    if not day or not hour:
+        return
+
+    event_date = datetime.now(tz=timezone(timedelta(hours=-3)))
+    while True:
+        if event_date.day == day:
+            break
+        event_date = event_date + timedelta(days=1)
+
+    event_date = event_date.replace(hour=hour, minute=0, second=0, microsecond=0)
+
+    client = caldav.DAVClient(
+        url=os.getenv("CALENDAR_URL"),
+        username=os.getenv("NEXTCLOUD_USERNAME"),
+        password=os.getenv("NEXTCLOUD_PASSWORD"),
+    )
+
+    principal = client.principal()
+
+    calendar = principal.calendar(name=os.getenv("CALENDAR_NAME"))
+
+    calendar.save_event(
+        dtstart=event_date,
+        dtend=event_date + timedelta(minutes=30),
+        summary=event_summary,
+    )
+
+
 if __name__ == "__main__":
     from dotenv import load_dotenv
     from datetime import datetime, timedelta, timezone
 
     load_dotenv()
-    print(
-        list_events(
-            datetime(2022, 12, 12, tzinfo=timezone(timedelta(hours=-3))),
-            datetime(2022, 12, 13, tzinfo=timezone(timedelta(hours=-3))),
-        )
-    )
+    # print(
+    #     list_events(
+    #         datetime(2022, 12, 12, tzinfo=timezone(timedelta(hours=-3))),
+    #         datetime(2022, 12, 13, tzinfo=timezone(timedelta(hours=-3))),
+    #     )
+    # )
+
+    print(create_event("jantar com a francy no dia 16 as 18 horas"))

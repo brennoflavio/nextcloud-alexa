@@ -4,7 +4,7 @@ from flask import Flask
 from flask_ask import Ask, request, session, question, statement
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
-from utils.nextcloud_calendar import list_events
+from utils.nextcloud_calendar import list_events, create_event
 from dateutil.parser import parse
 from utils.nextcloud_notes import get_notes_summary, get_single_note, create_note
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
@@ -64,10 +64,12 @@ def list_calendar_intent(event_date=""):
     return statement(speech_text).simple_card("Eventos Calendário", speech_text)
 
 
+# Done
 @ask.intent("CreateCalendarIntent", default={"event_query": "Sem descrição"})
 def create_calendar_intent(event_query):
+    create_event(event_query)
     speech_text = f"Criado evento {event_query}"
-    return statement(speech_text).simple_card("CreateCalendarIntent", speech_text)
+    return statement(speech_text).simple_card("Criar Evento", speech_text)
 
 
 # Done
