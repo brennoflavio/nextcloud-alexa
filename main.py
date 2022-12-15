@@ -123,6 +123,12 @@ def list_emails_intent():
     return statement(speech_text).simple_card("Lista de notícias", speech_text)
 
 
+@ask.intent("PlayMusicIntent")
+def list_emails_intent():
+    speech_text = f"<speak><audio src='https://s3.amazonaws.com/ask-storage/tidePooler/OceanWaves.mp3'/></speak>"
+    return statement(speech_text)
+
+
 # if __name__ == '__main__':
 #     if 'ASK_VERIFY_REQUESTS' in os.environ:
 #         verify = str(os.environ.get('ASK_VERIFY_REQUESTS', '')).lower()

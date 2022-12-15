@@ -158,6 +158,14 @@
                         "ler notícias",
                         "ler minhas notícias"
                     ]
+                },
+                {
+                    "name": "PlayMusicIntent",
+                    "slots": [],
+                    "samples": [
+                        "tocar música",
+                        "tocar músicas"
+                    ]
                 }
             ],
             "types": []
