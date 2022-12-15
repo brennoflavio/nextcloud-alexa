@@ -4,14 +4,10 @@ from email.header import decode_header
 import webbrowser
 import os
 from typing import Tuple
-from utils.text_utils import strip_links
+from utils.text_utils import strip_links, strip_html
 import html2text
 from unidecode import unidecode
 from fuzzywuzzy import process
-
-
-def strip_html(html_string: str) -> str:
-    return html2text.html2text(html_string)
 
 
 def parse_email_string(email_bytes: bytes) -> Tuple[str, str, str, str]:

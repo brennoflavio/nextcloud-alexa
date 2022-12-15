@@ -9,6 +9,7 @@ from dateutil.parser import parse
 from utils.nextcloud_notes import get_notes_summary, get_single_note, create_note
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
+from utils.nextcloud_news import get_news_summary
 
 app = Flask(__name__)
 ask = Ask(app, "/")
@@ -106,7 +107,7 @@ def create_note_intent(note_content):
 
 @ask.intent("ListEmailsIntent")
 def list_emails_intent():
-    speech_text = f"Seus primeiros 5 emails são: {get_emails_summary()}. Peça para ler um email para detalhes."
+    speech_text = f"Seus últimos 5 emails são: {get_emails_summary()}. Peça para ler um email para detalhes."
     return statement(speech_text).simple_card("Lista de emails", speech_text)
 
 
@@ -114,6 +115,12 @@ def list_emails_intent():
 def read_note_intent(email_subject):
     speech_text = get_single_email(email_subject)
     return statement(speech_text).simple_card("Email", speech_text)
+
+
+@ask.intent("ListNewsIntent")
+def list_emails_intent():
+    speech_text = f"Suas últimas 5 notícias são: {get_news_summary()}."
+    return statement(speech_text).simple_card("Lista de notícias", speech_text)
 
 
 # if __name__ == '__main__':

@@ -148,6 +148,16 @@
                         "ler email {email_subject}",
                         "ler o email {email_subject}"
                     ]
+                },
+                {
+                    "name": "ListNewsIntent",
+                    "slots": [],
+                    "samples": [
+                        "listar notícias",
+                        "listar minhas notícias",
+                        "ler notícias",
+                        "ler minhas notícias"
+                    ]
                 }
             ],
             "types": []
