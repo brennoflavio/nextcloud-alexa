@@ -133,7 +133,7 @@ def list_emails_intent():
 
 @app.route("/music/<path:name>")
 def music_folder(name):
-    return send_from_directory("music/", name, as_attachment=True)
+    return send_from_directory("music/", name)
 
 
 @app.route("/test")

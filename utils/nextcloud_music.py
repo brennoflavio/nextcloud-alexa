@@ -77,6 +77,8 @@ def get_random_playlist() -> str:
         response = response + f"<audio src='{result}'/>"
     response = response + "</speak>"
 
+    print(response, flush=True)
+
     return response
 
 
