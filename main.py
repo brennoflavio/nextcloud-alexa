@@ -1,6 +1,6 @@
 import logging
 import os
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_ask import Ask, request, session, question, statement
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
@@ -10,6 +10,8 @@ from utils.nextcloud_notes import get_notes_summary, get_single_note, create_not
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
 from utils.nextcloud_news import get_news_summary
+from utils.nextcloud_music import get_random_playlist
+import json
 
 app = Flask(__name__)
 ask = Ask(app, "/")
@@ -125,8 +127,19 @@ def list_emails_intent():
 
 @ask.intent("PlayMusicIntent")
 def list_emails_intent():
-    speech_text = f"<speak><audio src='https://s3.amazonaws.com/ask-storage/tidePooler/OceanWaves.mp3'/></speak>"
+    speech_text = get_random_playlist()
     return statement(speech_text)
+
+
+@app.route("/music/<path:name>")
+def music_folder(name):
+    return send_from_directory("music/", name, as_attachment=True)
+
+
+@app.route("/test")
+def test_music():
+    musics = get_random_playlist()
+    return json.dumps(musics)
 
 
 # if __name__ == '__main__':
