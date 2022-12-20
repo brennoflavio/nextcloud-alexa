@@ -203,9 +203,6 @@ def cancel() -> audio:
     return audio().clear_queue(stop=True)
 
 
-PlaybackStopped
-
-
 @ask.intent("AMAZON.NextIntent")
 def next_track():
     next_music = music_queue.next_item()
