@@ -1,7 +1,7 @@
 import logging
 import os
 from flask import Flask, send_from_directory
-from flask_ask import Ask, request, session, question, statement
+from flask_ask import Ask, request, session, question, statement, audio
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 from utils.nextcloud_calendar import list_events, create_event
@@ -125,10 +125,11 @@ def list_emails_intent():
     return statement(speech_text).simple_card("Lista de notícias", speech_text)
 
 
-@ask.intent("PlayMusicIntent")
-def list_emails_intent():
-    speech_text = get_random_playlist()
-    return statement(speech_text)
+# Music
+# @ask.intent("PlayMusicIntent")
+# def list_emails_intent():
+#     speech_text = get_random_playlist()
+#     return statement(speech_text)
 
 
 @app.route("/music/<path:name>")
@@ -140,6 +141,20 @@ def music_folder(name):
 def test_music():
     musics = get_random_playlist()
     return musics
+
+
+@ask.intent("PlayMusicIntent")
+def play_random_tracks():
+    speech = "Tocando músicas"
+    playlist = get_random_playlist()
+
+    # need to implement queue
+    return audio(speech).play(playlist)
+
+    # log('Shuffle Library')
+    # tracks = subsonic.random_tracks(tracks_count)
+    # track = queue.reset(tracks)
+    # return play_track_response(track, render_template('playing_library'))
 
 
 # if __name__ == '__main__':

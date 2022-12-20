@@ -27,6 +27,7 @@ def get_random_songs(n: int) -> list:
     text_response = response.text
     dict_response = parse(text_response)
 
+    # If n=1, "song" is dict instead of list
     song_ids = [
         x.get("@id")
         for x in dict_response.get("subsonic-response", {})
@@ -61,7 +62,7 @@ def download_song(song_id: str) -> str:
 
 
 def get_random_playlist() -> str:
-    song_ids = get_random_songs(1)
+    song_ids = get_random_songs(2)
 
     results = []
     with ThreadPoolExecutor(8) as pool:
@@ -72,14 +73,7 @@ def get_random_playlist() -> str:
         for future in futures:
             results.append(future.result())
 
-    response = "<speak>"
-    for result in results:
-        response = response + f"<audio src='{result}'/>"
-    response = response + "</speak>"
-
-    print(response, flush=True)
-
-    return response
+    return results[0]
 
 
 if __name__ == "__main__":
