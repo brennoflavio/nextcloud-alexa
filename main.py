@@ -148,23 +148,19 @@ def play_random_tracks():
     return audio(speech_text).play(music_url)
 
 
-# @ask.on_playback_started()
-# def playback_started() -> tuple:
-#     if queue.current:
-#         queue.current.scrobble(submission=False, timestamp=queue.start_time)
-#     return empty_response
+@ask.on_playback_started()
+def playback_started():
+    return statement("")
 
 
-# @ask.on_playback_stopped()
-# def playback_stopped() -> tuple:
-#     log("Playback Stopped")
-#     return empty_response
+@ask.on_playback_stopped()
+def playback_stopped():
+    return statement("")
 
 
-# @ask.on_playback_failed()
-# def playback_failed() -> tuple:
-#     log("Playback Failed")
-#     return empty_response
+@ask.on_playback_failed()
+def playback_failed() -> tuple:
+    return statement("")
 
 
 @ask.on_playback_nearly_finished()
@@ -205,6 +201,9 @@ def stop():
 def cancel() -> audio:
     music_queue.clear()
     return audio().clear_queue(stop=True)
+
+
+PlaybackStopped
 
 
 @ask.intent("AMAZON.NextIntent")
