@@ -237,29 +237,29 @@ def restart_track():
         return statement("Não há músicas")
 
 
-@ask.on_playback_pause_command()
-def pause_command() -> audio:
-    return audio().stop()
+# @ask.on_playback_pause_command()
+# def pause_command() -> audio:
+#     return audio().stop()
 
 
-@ask.on_playback_next_command()
-def next_command() -> audio:
-    next_music = music_queue.next_item()
+# @ask.on_playback_next_command()
+# def next_command() -> audio:
+#     next_music = music_queue.next_item()
 
-    if next_music:
-        return audio().play(next_music)
-    else:
-        return statement("Todas as músicas foram tocadas")
+#     if next_music:
+#         return audio().play(next_music)
+#     else:
+#         return statement("Todas as músicas foram tocadas")
 
 
-@ask.on_playback_previous_command()
-def previous_command() -> Union[audio, tuple]:
-    previous_music = music_queue.previous_item()
+# @ask.on_playback_previous_command()
+# def previous_command() -> Union[audio, tuple]:
+#     previous_music = music_queue.previous_item()
 
-    if previous_music:
-        return audio().play(previous_music)
-    else:
-        return statement("Não há música anterior")
+#     if previous_music:
+#         return audio().play(previous_music)
+#     else:
+#         return statement("Não há música anterior")
 
 
 @ask.default_intent
