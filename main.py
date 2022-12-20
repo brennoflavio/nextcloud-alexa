@@ -13,6 +13,11 @@ from utils.nextcloud_news import get_news_summary
 from utils.nextcloud_music import get_random_playlist
 import json
 from utils.music_queue import MusicQueue
+import inspect
+
+# Patch due to flask ask bug
+if not hasattr(inspect, "getargspec"):
+    inspect.getargspec = inspect.getfullargspec
 
 app = Flask(__name__)
 ask = Ask(app, "/")
