@@ -61,7 +61,7 @@ def download_song(song_id: str) -> str:
     return url
 
 
-def get_random_playlist() -> str:
+def get_random_playlist() -> list:
     song_ids = get_random_songs(5)
 
     results = []
@@ -73,7 +73,7 @@ def get_random_playlist() -> str:
         for future in futures:
             results.append(future.result())
 
-    return results[0]
+    return results
 
 
 if __name__ == "__main__":
