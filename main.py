@@ -12,11 +12,14 @@ from utils.imap_email import get_emails_summary, get_single_email
 from utils.nextcloud_news import get_news_summary
 from utils.nextcloud_music import get_random_playlist
 import json
+from utils.music_queue import MusicQueue
 
 app = Flask(__name__)
 ask = Ask(app, "/")
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 load_dotenv()
+
+music_queue = MusicQueue()
 
 
 @ask.launch
@@ -137,24 +140,142 @@ def music_folder(name):
     return send_from_directory("music/", name)
 
 
-@app.route("/test")
-def test_music():
-    musics = get_random_playlist()
-    return musics
-
-
 @ask.intent("PlayMusicIntent")
 def play_random_tracks():
-    speech = "Tocando músicas"
+    speech_text = "Tocando músicas"
     playlist = get_random_playlist()
+    music_url = music_queue.start_queue(playlist)
+    return audio(speech_text).play(music_url)
 
-    # need to implement queue
-    return audio(speech).play(playlist)
 
-    # log('Shuffle Library')
-    # tracks = subsonic.random_tracks(tracks_count)
-    # track = queue.reset(tracks)
-    # return play_track_response(track, render_template('playing_library'))
+# @ask.on_playback_started()
+# def playback_started() -> tuple:
+#     if queue.current:
+#         queue.current.scrobble(submission=False, timestamp=queue.start_time)
+#     return empty_response
+
+
+# @ask.on_playback_stopped()
+# def playback_stopped() -> tuple:
+#     log("Playback Stopped")
+#     return empty_response
+
+
+# @ask.on_playback_failed()
+# def playback_failed() -> tuple:
+#     log("Playback Failed")
+#     return empty_response
+
+
+@ask.on_playback_nearly_finished()
+def playback_nearly_finished():
+    next_music = music_queue.next_item()
+    if next_music:
+        return audio().play(next_music)
+    else:
+        return statement("")
+
+
+# @ask.on_playback_finished()
+# def playback_finished() -> tuple:
+#     log("Playback Finished")
+#     if queue.current:
+#         queue.current.scrobble(submission=True, timestamp=queue.start_time)
+#     queue.next()
+#     return empty_response
+
+
+@ask.intent("AMAZON.PauseIntent")
+def pause():
+    return audio().stop()
+
+
+@ask.intent("AMAZON.ResumeIntent")
+def resume():
+    return audio().resume()
+
+
+@ask.intent("AMAZON.StopIntent")
+def stop():
+    music_queue.clear()
+    return audio("Parando músicas").stop()
+
+
+@ask.intent("AMAZON.CancelIntent")
+def cancel() -> audio:
+    music_queue.clear()
+    return audio().clear_queue(stop=True)
+
+
+@ask.intent("AMAZON.NextIntent")
+def next_track():
+    next_music = music_queue.next_item()
+
+    if next_music:
+        return audio().play(next_music)
+    else:
+        return statement("Todas as músicas foram tocadas")
+
+
+@ask.intent("AMAZON.PreviousIntent")
+def previous_track():
+    previous_music = music_queue.previous_item()
+
+    if previous_music:
+        return audio().play(previous_music)
+    else:
+        return statement("Não há música anterior")
+
+
+@ask.intent("AMAZON.StartOverIntent")
+def restart_track():
+    current_music = music_queue.current()
+
+    if current_music:
+        return audio().play(current_music)
+    else:
+        return statement("Não há músicas")
+
+
+@ask.on_playback_play_command()
+def play_command():
+    return audio().resume()
+
+
+@ask.on_playback_pause_command()
+def pause_command() -> audio:
+    return audio().stop()
+
+
+@ask.on_playback_next_command()
+def next_command() -> audio:
+    next_music = music_queue.next_item()
+
+    if next_music:
+        return audio().play(next_music)
+    else:
+        return statement("Todas as músicas foram tocadas")
+
+
+@ask.on_playback_previous_command()
+def previous_command() -> Union[audio, tuple]:
+    previous_music = music_queue.previous_item()
+
+    if previous_music:
+        return audio().play(previous_music)
+    else:
+        return statement("Não há música anterior")
+
+
+@ask.default_intent
+@ask.intent("AMAZON.FallbackIntent")
+@ask.intent("AMAZON.LoopOffIntent")
+@ask.intent("AMAZON.LoopOnIntent")
+@ask.intent("AMAZON.RepeatIntent")
+@ask.intent("AMAZON.ShuffleOffIntent")
+@ask.intent("AMAZON.ShuffleOnIntent")
+def unsupported_intent() -> statement:
+    return statement("Comando não suportado")
 
 
 # if __name__ == '__main__':
