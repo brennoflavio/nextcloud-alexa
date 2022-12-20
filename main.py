@@ -237,11 +237,6 @@ def restart_track():
         return statement("Não há músicas")
 
 
-@ask.on_playback_play_command()
-def play_command():
-    return audio().resume()
-
-
 @ask.on_playback_pause_command()
 def pause_command() -> audio:
     return audio().stop()
