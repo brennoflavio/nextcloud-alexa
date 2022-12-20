@@ -154,7 +154,7 @@ def play_random_tracks():
 
 
 @ask.intent("SearchMusicIntent", default={"music_query": ""})
-def play_filtered_tracks():
+def play_filtered_tracks(music_query):
     speech_text = "Tocando músicas"
     playlist = get_filtered_playlist(music_query)
     music_url = music_queue.start_queue(playlist)
