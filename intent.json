@@ -168,6 +168,20 @@
                     ]
                 },
                 {
+                    "name": "SearchMusicIntent",
+                    "slots": [
+                        {
+                            "name": "music_query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "tocar música {music_query}",
+                        "tocar músicas de {music_query}",
+                        "tocar {music_query}"
+                    ]
+                },
+                {
                     "name": "AMAZON.PauseIntent",
                     "samples": []
                 },

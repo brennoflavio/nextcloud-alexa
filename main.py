@@ -10,7 +10,7 @@ from utils.nextcloud_notes import get_notes_summary, get_single_note, create_not
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
 from utils.nextcloud_news import get_news_summary
-from utils.nextcloud_music import get_random_playlist
+from utils.nextcloud_music import get_random_playlist, get_filtered_playlist
 import json
 from utils.music_queue import MusicQueue
 import inspect
@@ -149,6 +149,14 @@ def music_folder(name):
 def play_random_tracks():
     speech_text = "Tocando músicas"
     playlist = get_random_playlist()
+    music_url = music_queue.start_queue(playlist)
+    return audio(speech_text).play(music_url)
+
+
+@ask.intent("SearchMusicIntent", default={"music_query": ""})
+def play_filtered_tracks():
+    speech_text = "Tocando músicas"
+    playlist = get_filtered_playlist(music_query)
     music_url = music_queue.start_queue(playlist)
     return audio(speech_text).play(music_url)
 
