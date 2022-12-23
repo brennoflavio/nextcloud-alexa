@@ -21,15 +21,16 @@ if not hasattr(inspect, "getargspec"):
 
 app = Flask(__name__)
 ask = Ask(app, "/")
-logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 load_dotenv()
+
+app.config["ASK_APPLICATION_ID"] = os.getenv("ALEXA_SKILL_ID")
 
 music_queue = MusicQueue()
 
 
 @ask.launch
 def launch():
-    speech_text = "Welcome to the Alexa Skills Kit, you can say hello"
+    speech_text = "Oi, eu sou o pardal, pru pru"
     return (
         question(speech_text)
         .reprompt(speech_text)
@@ -133,13 +134,6 @@ def list_emails_intent():
     return statement(speech_text).simple_card("Lista de notícias", speech_text)
 
 
-# Music
-# @ask.intent("PlayMusicIntent")
-# def list_emails_intent():
-#     speech_text = get_random_playlist()
-#     return statement(speech_text)
-
-
 @app.route("/music/<path:name>")
 def music_folder(name):
     return send_from_directory("music/", name)
@@ -183,15 +177,6 @@ def playback_nearly_finished():
         return audio().play(next_music)
     else:
         return statement("")
-
-
-# @ask.on_playback_finished()
-# def playback_finished() -> tuple:
-#     log("Playback Finished")
-#     if queue.current:
-#         queue.current.scrobble(submission=True, timestamp=queue.start_time)
-#     queue.next()
-#     return empty_response
 
 
 @ask.intent("AMAZON.PauseIntent")
@@ -246,31 +231,6 @@ def restart_track():
         return statement("Não há músicas")
 
 
-# @ask.on_playback_pause_command()
-# def pause_command() -> audio:
-#     return audio().stop()
-
-
-# @ask.on_playback_next_command()
-# def next_command() -> audio:
-#     next_music = music_queue.next_item()
-
-#     if next_music:
-#         return audio().play(next_music)
-#     else:
-#         return statement("Todas as músicas foram tocadas")
-
-
-# @ask.on_playback_previous_command()
-# def previous_command() -> Union[audio, tuple]:
-#     previous_music = music_queue.previous_item()
-
-#     if previous_music:
-#         return audio().play(previous_music)
-#     else:
-#         return statement("Não há música anterior")
-
-
 @ask.default_intent
 @ask.intent("AMAZON.FallbackIntent")
 @ask.intent("AMAZON.LoopOffIntent")
@@ -280,14 +240,6 @@ def restart_track():
 @ask.intent("AMAZON.ShuffleOnIntent")
 def unsupported_intent() -> statement:
     return statement("Comando não suportado")
-
-
-# if __name__ == '__main__':
-#     if 'ASK_VERIFY_REQUESTS' in os.environ:
-#         verify = str(os.environ.get('ASK_VERIFY_REQUESTS', '')).lower()
-#         if verify == 'false':
-#             app.config['ASK_VERIFY_REQUESTS'] = False
-#     app.run(debug=True)
 
 
 if __name__ == "__main__":
