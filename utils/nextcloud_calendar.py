@@ -5,7 +5,6 @@ from dateutil.parser import parse
 from typing import Tuple
 from utils.ics_calendar import parse_extra_calendars
 from unidecode import unidecode
-from uuid import uuid4
 
 
 def parse_event_card(event_card: str) -> Tuple[str, str]:
@@ -122,18 +121,3 @@ def create_event(event_query: str) -> None:
         dtend=event_date + timedelta(minutes=30),
         summary=event_summary,
     )
-
-
-if __name__ == "__main__":
-    from dotenv import load_dotenv
-    from datetime import datetime, timedelta, timezone
-
-    load_dotenv()
-    # print(
-    #     list_events(
-    #         datetime(2022, 12, 12, tzinfo=timezone(timedelta(hours=-3))),
-    #         datetime(2022, 12, 13, tzinfo=timezone(timedelta(hours=-3))),
-    #     )
-    # )
-
-    print(create_event("jantar com a francy no dia 16 as 18 horas"))

@@ -1,9 +1,6 @@
 import requests
 import os
 import urllib.parse
-import json
-from fuzzywuzzy import process
-import re
 from utils.text_utils import strip_links, strip_html
 from unidecode import unidecode
 
@@ -33,14 +30,7 @@ def get_news_summary() -> str:
         news = news[:5]
 
     news_text = ", ".join(
-        [strip_links(strip_html(unidecode(x.get("title")))) for x in notes]
+        [strip_links(strip_html(unidecode(x.get("title")))) for x in news]
     )
 
     return news_text
-
-
-if __name__ == "__main__":
-    from dotenv import load_dotenv
-
-    load_dotenv()
-    print(get_news())

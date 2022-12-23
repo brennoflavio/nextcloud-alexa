@@ -30,8 +30,8 @@ def finish_ics(ics: str) -> str:
         if "BEGIN:VTODO" in row:
             final_ics.append(f"DTSTAMP:{dt}")
             final_ics.append(f"LAST-MODIFIED:{dt}")
-            final_ics.append(f"STATUS:COMPLETED")
-            final_ics.append(f"PERCENT-COMPLETE:100")
+            final_ics.append("STATUS:COMPLETED")
+            final_ics.append("PERCENT-COMPLETE:100")
             final_ics.append(f"COMPLETED:{dt}")
     return ("\n".join(final_ics)).strip()
 
@@ -152,12 +152,3 @@ def finish_task(task_name: str):
             auth=(os.getenv("NEXTCLOUD_USERNAME"), os.getenv("NEXTCLOUD_PASSWORD")),
         )
         response.raise_for_status()
-
-
-if __name__ == "__main__":
-    from dotenv import load_dotenv
-    from datetime import datetime, timedelta, timezone
-
-    load_dotenv()
-    print(get_task_summary())
-    # finish_task("arrumar fechadura")

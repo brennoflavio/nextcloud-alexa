@@ -1,11 +1,9 @@
 import imaplib
 import email
 from email.header import decode_header
-import webbrowser
 import os
 from typing import Tuple
 from utils.text_utils import strip_links, strip_html
-import html2text
 from unidecode import unidecode
 from fuzzywuzzy import process
 
@@ -133,12 +131,3 @@ def get_single_email(name: str) -> str:
             return email
 
     return "Email não encontrado"
-
-
-if __name__ == "__main__":
-    from dotenv import load_dotenv
-    import json
-
-    load_dotenv()
-    # print(json.dumps(get_emails(5), indent=4))
-    print(get_single_email("avalie em 15 segundos"))

@@ -6,8 +6,8 @@ class MusicQueue:
         self._queue = []
         self._idx = None
 
-    def start_queue(self, l: list) -> str:
-        self._queue = [*l]
+    def start_queue(self, playlist: list) -> str:
+        self._queue = [*playlist]
         self._idx = 0
         return self._queue[self._idx]
 

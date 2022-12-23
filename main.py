@@ -1,7 +1,6 @@
-import logging
 import os
 from flask import Flask, send_from_directory
-from flask_ask import Ask, request, session, question, statement, audio
+from flask_ask import Ask, question, statement, audio
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 from utils.nextcloud_calendar import list_events, create_event
@@ -11,7 +10,6 @@ from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
 from utils.nextcloud_news import get_news_summary
 from utils.nextcloud_music import get_random_playlist, get_filtered_playlist
-import json
 from utils.music_queue import MusicQueue
 import inspect
 
@@ -91,7 +89,7 @@ def finish_task_intent(task_name):
 
 
 @ask.intent("CreateTaskIntent", default={"task_name": "Sem descrição"})
-def create_calendar_intent(task_name):
+def create_task_intent(task_name):
     create_task(task_name)
     speech_text = f"Criado tarefa {task_name}"
     return statement(speech_text).simple_card("Criar Tarefa", speech_text)
@@ -123,13 +121,13 @@ def list_emails_intent():
 
 
 @ask.intent("ReadEmailIntent", default={"email_subject": ""})
-def read_note_intent(email_subject):
+def read_email_intent(email_subject):
     speech_text = get_single_email(email_subject)
     return statement(speech_text).simple_card("Email", speech_text)
 
 
 @ask.intent("ListNewsIntent")
-def list_emails_intent():
+def list_news_intent():
     speech_text = f"Suas últimas 5 notícias são: {get_news_summary()}."
     return statement(speech_text).simple_card("Lista de notícias", speech_text)
 

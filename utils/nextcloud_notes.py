@@ -1,9 +1,7 @@
 import requests
 import os
 import urllib.parse
-import json
 from fuzzywuzzy import process
-import re
 from utils.text_utils import strip_links
 
 
@@ -87,13 +85,3 @@ def create_note(content: str):
     )
 
     response.raise_for_status()
-
-
-if __name__ == "__main__":
-    from dotenv import load_dotenv
-
-    load_dotenv()
-
-    # print(get_notes_summary())
-    # print(get_single_note("nas"))
-    create_note("argentina ganhou do marrocos")
