@@ -200,6 +200,18 @@
                 {
                     "name": "AMAZON.StartOverIntent",
                     "samples": []
+                },
+                {
+                    "name": "SearchPodcastIntent",
+                    "slots": [
+                        {
+                            "name": "podcast_query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "tocar podcast {podcast_query}"
+                    ]
                 }
             ],
             "types": []

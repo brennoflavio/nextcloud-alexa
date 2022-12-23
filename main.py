@@ -9,7 +9,11 @@ from utils.nextcloud_notes import get_notes_summary, get_single_note, create_not
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
 from utils.nextcloud_news import get_news_summary
-from utils.nextcloud_music import get_random_playlist, get_filtered_playlist
+from utils.nextcloud_music import (
+    get_random_playlist,
+    get_filtered_playlist,
+    get_podcast,
+)
 from utils.music_queue import MusicQueue
 import inspect
 
@@ -238,6 +242,14 @@ def restart_track():
 @ask.intent("AMAZON.ShuffleOnIntent")
 def unsupported_intent() -> statement:
     return statement("Comando não suportado")
+
+
+@ask.intent("SearchPodcastIntent", default={"podcast_query": ""})
+def play_podcast(podcast_query):
+    podcast_name, playlist = get_podcast(podcast_query)
+    speech_text = f"Tocando podcast {podcast_name}"
+    music_url = music_queue.start_queue(playlist)
+    return audio(speech_text).play(music_url)
 
 
 if __name__ == "__main__":
