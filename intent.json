@@ -212,6 +212,16 @@
                     "samples": [
                         "tocar podcast {podcast_query}"
                     ]
+                },
+                {
+                    "name": "DailyDigestIntent",
+                    "slots": [],
+                    "samples": [
+                        "resumo do dia",
+                        "dar bom dia",
+                        "dar o resumo do dia",
+                        "ler o resumo do dia"
+                    ]
                 }
             ],
             "types": []

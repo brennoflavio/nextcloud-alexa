@@ -233,7 +233,6 @@ def restart_track():
         return statement("Não há músicas")
 
 
-@ask.default_intent
 @ask.intent("AMAZON.FallbackIntent")
 @ask.intent("AMAZON.LoopOffIntent")
 @ask.intent("AMAZON.LoopOnIntent")
@@ -250,6 +249,26 @@ def play_podcast(podcast_query):
     speech_text = f"Tocando podcast {podcast_name}"
     music_url = music_queue.start_queue(playlist)
     return audio(speech_text).play(music_url)
+
+
+@ask.default_intent
+def default_intent():
+    speech_text = "Esta ação não é suportada ainda. Por favor, tente novamente"
+    return statement(speech_text)
+
+
+@ask.intent("DailyDigestIntent")
+def daily_digest():
+    event_date = datetime.now(tzinfo=timezone(timedelta(hours=-3))).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+    end_date = event_date + timedelta(days=1)
+
+    events = list_events(event_date, end_date)
+
+    speech_text = f"Aqui está seu resumo do dia. Seus eventos de hoje são: {events}. Seus últimos 5 emails são: {get_emails_summary()}. Suas próximas 5 tarefas são: {get_task_summary()}. Suas primeiras 5 notas são: {get_notes_summary()}. Tenha um bom dia!"
+
+    return statement(speech_text)
 
 
 if __name__ == "__main__":
