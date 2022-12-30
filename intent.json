@@ -222,6 +222,15 @@
                         "dar o resumo do dia",
                         "ler o resumo do dia"
                     ]
+                },
+                {
+                    "name": "WakeOnLanIntent",
+                    "slots": [],
+                    "samples": [
+                        "ligar o computador",
+                        "ligar meu computador",
+                        "ligar computador"
+                    ]
                 }
             ],
             "types": []

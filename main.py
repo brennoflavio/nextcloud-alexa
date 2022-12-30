@@ -8,6 +8,7 @@ from dateutil.parser import parse
 from utils.nextcloud_notes import get_notes_summary, get_single_note, create_note
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
+from utils.wake_on_lan import wake_on_lan
 
 # from utils.nextcloud_news import get_news_summary
 from utils.nextcloud_music import (
@@ -270,6 +271,13 @@ def daily_digest():
 
     speech_text = f"Aqui está seu resumo do dia. Seus eventos de hoje são: {events}. Seus últimos 5 emails são: {get_emails_summary()}. Suas próximas 5 tarefas são: {get_task_summary()}. Suas primeiras 5 notas são: {get_notes_summary()}. Tenha um bom dia!"
 
+    return statement(speech_text)
+
+
+@ask.intent("WakeOnLanIntent")
+def wake_on_lan_intent():
+    wake_on_lan()
+    speech_text = "Ligando computador"
     return statement(speech_text)
 
 
