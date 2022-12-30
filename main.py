@@ -58,7 +58,7 @@ def session_ended():
 @ask.intent("ListCalendarIntent", default={"event_date": ""})
 def list_calendar_intent(event_date=""):
     if not event_date:
-        event_date = datetime.now(tzinfo=timezone(timedelta(hours=-3))).replace(
+        event_date = datetime.now(tz=timezone(timedelta(hours=-3))).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
     else:
@@ -259,7 +259,7 @@ def default_intent():
 
 @ask.intent("DailyDigestIntent")
 def daily_digest():
-    event_date = datetime.now(tzinfo=timezone(timedelta(hours=-3))).replace(
+    event_date = datetime.now(tz=timezone(timedelta(hours=-3))).replace(
         hour=0, minute=0, second=0, microsecond=0
     )
     end_date = event_date + timedelta(days=1)
