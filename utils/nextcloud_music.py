@@ -86,6 +86,9 @@ def get_songs_filtered(search_query: str) -> list:
     text_response = response.text
     dict_response = parse(text_response)
 
+    if not dict_response:
+        return []
+
     songs = (
         dict_response.get("subsonic-response", {})
         .get("searchResult2", {})
