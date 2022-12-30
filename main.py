@@ -8,7 +8,8 @@ from dateutil.parser import parse
 from utils.nextcloud_notes import get_notes_summary, get_single_note, create_note
 from utils.nextcloud_tasks import get_task_summary, create_task, finish_task
 from utils.imap_email import get_emails_summary, get_single_email
-from utils.nextcloud_news import get_news_summary
+
+# from utils.nextcloud_news import get_news_summary
 from utils.nextcloud_music import (
     get_random_playlist,
     get_filtered_playlist,
@@ -16,6 +17,7 @@ from utils.nextcloud_music import (
 )
 from utils.music_queue import MusicQueue
 import inspect
+from utils.news import get_latest_news
 
 # Patch due to flask ask bug
 if not hasattr(inspect, "getargspec"):
@@ -132,8 +134,8 @@ def read_email_intent(email_subject):
 
 @ask.intent("ListNewsIntent")
 def list_news_intent():
-    speech_text = f"Suas últimas 5 notícias são: {get_news_summary()}."
-    return statement(speech_text).simple_card("Lista de notícias", speech_text)
+    speech_text = get_latest_news()
+    return statement(speech_text)
 
 
 @app.route("/music/<path:name>")
