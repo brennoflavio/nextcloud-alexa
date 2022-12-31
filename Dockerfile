@@ -5,8 +5,9 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN apt update -y
-RUN apt install wakeonlan
+RUN apt-get update -y
+RUN apt-get install -y wakeonlan
+RUN apt-get install -y sshpass
 
 COPY . .
 
