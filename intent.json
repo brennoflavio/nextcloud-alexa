@@ -231,6 +231,15 @@
                         "ligar meu computador",
                         "ligar computador"
                     ]
+                },
+                {
+                    "name": "SleepOnLanIntent",
+                    "slots": [],
+                    "samples": [
+                        "desligar o computador",
+                        "desligar meu computador",
+                        "desligar computador"
+                    ]
                 }
             ],
             "types": []
