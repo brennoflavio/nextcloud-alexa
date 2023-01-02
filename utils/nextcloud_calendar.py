@@ -56,9 +56,10 @@ def list_events(start_date: datetime, end_date: datetime) -> str:
     )
     events_text = ""
     for event in event_list:
-        dt = event[1].astimezone(timezone(timedelta(hours=-3)))
+        dt = event[1]
 
         if dt.hour:
+            dt = dt.astimezone(timezone(timedelta(hours=-3)))
             event_str = f" {event[0]} às {str(dt.hour)} horas"
             if dt.minute:
                 event_str = event_str + f" e {str(dt.minute)} minutos"
