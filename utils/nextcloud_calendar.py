@@ -1,6 +1,6 @@
 import os
 import caldav
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date
 from dateutil.parser import parse
 from typing import Tuple
 from utils.ics_calendar import parse_extra_calendars
@@ -23,6 +23,9 @@ def parse_event_card(event_card: str) -> Tuple[str, str]:
             dt = dt.replace(tzinfo=timezone.utc)
     else:
         dt = datetime.now(tz=timedelta(timezone(hours=-3)))
+
+    if isinstance(dt, date):
+        dt = datetime.combine(dt, datetime.min.time())
 
     return text_summary, dt
 
