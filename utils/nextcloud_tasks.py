@@ -37,17 +37,21 @@ def finish_ics(ics: str) -> str:
 
 
 def create_ical_card(summary) -> str:
-    dt = datetime.now(tz=timezone(timedelta(hours=-3))).strftime("%Y%m%dT%H%M%S")
+    dt = datetime.now(tz=timezone(timedelta(hours=-3)))
+    parsed_dt = dt.strftime("%Y%m%dT%H%M%S")
+    parsed_tomorrow = (dt + timedelta(days=1)).strftime("%Y%m%d")
     ical_base = f"""
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Nextcloud Alexa
 BEGIN:VTODO
 UID:{str(uuid4())}
-CREATED:{dt}
-LAST-MODIFIED:{dt}
-DTSTAMP:{dt}
+CREATED:{parsed_dt}
+LAST-MODIFIED:{parsed_dt}
+DTSTAMP:{parsed_dt}
 SUMMARY:{summary}
+DUE;VALUE=DATE:{parsed_tomorrow}
+DTSTART;VALUE=DATE:{parsed_tomorrow}
 END:VTODO
 END:VCALENDAR
     """
