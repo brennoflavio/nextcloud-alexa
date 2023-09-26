@@ -49,4 +49,12 @@ Once its ready, you can test it by going to "Test", and typing:
 Alexa, peça ao sabiá para listar eventos de hoje
 ```
 
+```
+Alexa, ask Nextcloud to list today's events
+```
+
+```
+Alexa, bitte Nextcloud heute's Veranstaltungen auflisten
+```
+
 In your echo phone app you should also see the skill there.

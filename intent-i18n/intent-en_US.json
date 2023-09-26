@@ -1,0 +1,246 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "Nextcloud",
+            "intents": [
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ListCalendarIntent",
+                    "slots": [
+                        {
+                            "name": "event_date",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "events on {event_date}",
+                        "events for {event_date}",
+                        "list my events on {event_date}",
+                        "list events {event_date}",
+                        "events for the day {event_date}",
+                        "list my events for the day {event_date}",
+                        "list events"
+                    ]
+                },
+                {
+                    "name": "CreateCalendarIntent",
+                    "slots": [
+                        {
+                            "name": "event_query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "create event {event_query}"
+                    ]
+                },
+                {
+                    "name": "ListTasksIntent",
+                    "slots": [],
+                    "samples": [
+                        "list tasks",
+                        "list my tasks"
+                    ]
+                },
+                {
+                    "name": "FinishTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task_name",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "complete task {task_name}",
+                        "finish task {task_name}",
+                        "finish the task {task_name}",
+                        "finish my task {task_name}",
+                        "complete my task {task_name}"
+                    ]
+                },
+                {
+                    "name": "CreateTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task_name",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "create task {task_name}",
+                        "create the task {task_name}",
+                        "create my task {task_name}"
+                    ]
+                },
+                {
+                    "name": "ListNotesIntent",
+                    "slots": [],
+                    "samples": [
+                        "list notes",
+                        "list my notes",
+                        "read notes",
+                        "read my notes"
+                    ]
+                },
+                {
+                    "name": "CreateNoteIntent",
+                    "slots": [
+                        {
+                            "name": "note_content",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "create note {note_content}",
+                        "create the note {note_content}",
+                        "write down {note_content}"
+                    ]
+                },
+                {
+                    "name": "ReadNoteIntent",
+                    "slots": [
+                        {
+                            "name": "note_name",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "read note {note_name}",
+                        "read the note {note_name}"
+                    ]
+                },
+                {
+                    "name": "ListEmailsIntent",
+                    "slots": [],
+                    "samples": [
+                        "list emails",
+                        "list my emails",
+                        "read emails",
+                        "read my emails"
+                    ]
+                },
+                {
+                    "name": "ReadEmailIntent",
+                    "slots": [
+                        {
+                            "name": "email_subject",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "read email {email_subject}",
+                        "read the email {email_subject}"
+                    ]
+                },
+                {
+                    "name": "ListNewsIntent",
+                    "slots": [],
+                    "samples": [
+                        "list news",
+                        "list my news",
+                        "read news",
+                        "read my news"
+                    ]
+                },
+                {
+                    "name": "PlayMusicIntent",
+                    "slots": [],
+                    "samples": [
+                        "play music",
+                        "play some music"
+                    ]
+                },
+                {
+                    "name": "SearchMusicIntent",
+                    "slots": [
+                        {
+                            "name": "music_query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "play music {music_query}",
+                        "play music by {music_query}",
+                        "play {music_query}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StartOverIntent",
+                    "samples": []
+                },
+                {
+                    "name": "SearchPodcastIntent",
+                    "slots": [
+                        {
+                            "name": "podcast_query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "play podcast {podcast_query}"
+                    ]
+                },
+                {
+                    "name": "DailyDigestIntent",
+                    "slots": [],
+                    "samples": [
+                        "daily summary",
+                        "give me a daily update",
+                        "read the daily digest",
+                        "tell me the daily summary"
+                    ]
+                },
+                {
+                    "name": "WakeOnLanIntent",
+                    "slots": [],
+                    "samples": [
+                        "turn on the computer",
+                        "wake up my computer",
+                        "start the computer"
+                    ]
+                },
+                {
+                    "name": "SleepOnLanIntent",
+                    "slots": [],
+                    "samples": [
+                        "turn off the computer",
+                        "put my computer to sleep",
+                        "shut down the computer"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
