@@ -97,7 +97,7 @@ def finish_task_intent(task_name):
 
 @ask.intent("CreateTaskIntent", default={"task_name": "Sem descrição"})
 def create_task_intent(task_name):
-    create_task(task_name)
+    create_task(task_name, save_due_date = False)
     speech_text = f"Criado tarefa {task_name}"
     return statement(speech_text).simple_card("Criar Tarefa", speech_text)
 

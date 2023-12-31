@@ -36,25 +36,28 @@ def finish_ics(ics: str) -> str:
     return ("\n".join(final_ics)).strip()
 
 
-def create_ical_card(summary) -> str:
+def create_ical_card(summary, save_due_date = True) -> str:
     dt = datetime.now(tz=timezone(timedelta(hours=-3)))
     parsed_dt = dt.strftime("%Y%m%dT%H%M%S")
     parsed_tomorrow = (dt + timedelta(days=1)).strftime("%Y%m%d")
     ical_base = f"""
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Nextcloud Alexa
+PRODID:-//Smart Home Integration
 BEGIN:VTODO
 UID:{str(uuid4())}
 CREATED:{parsed_dt}
 LAST-MODIFIED:{parsed_dt}
 DTSTAMP:{parsed_dt}
 SUMMARY:{summary}
-DUE;VALUE=DATE:{parsed_tomorrow}
-DTSTART;VALUE=DATE:{parsed_tomorrow}
-END:VTODO
-END:VCALENDAR
-    """
+"""
+    if save_due_date:
+        ical_base = f"{ical_base}DUE;VALUE=DATE:{parsed_tomorrow}\n"
+        ical_base = f"{ical_base}DTSTART;VALUE=DATE:{parsed_tomorrow}\n"
+
+    ical_base = f"{ical_base}END:VTODO\n"
+    ical_base = f"{ical_base}END:VCALENDAR\n"
+
     return ical_base.strip()
 
 
@@ -121,7 +124,7 @@ def get_task_summary() -> str:
     return tasks_text
 
 
-def create_task(summary: str):
+def create_task(summary: str, save_due_date = True):
     client = caldav.DAVClient(
         url=os.getenv("TASK_URL"),
         username=os.getenv("NEXTCLOUD_USERNAME"),
@@ -131,7 +134,7 @@ def create_task(summary: str):
     principal = client.principal()
     calendar = principal.calendar(name=os.getenv("TASK_LIST_NAME"))
 
-    ical = create_ical_card(summary)
+    ical = create_ical_card(summary, save_due_date)
     calendar.add_event(ical)
 
 
